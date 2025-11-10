@@ -1,0 +1,102 @@
+
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--
+    Remember to block potentially dangerous literals in the backend!
+    BLOCKED_LITERALS = [
+      '{', '}', '__', 'open', 'os', 'subprocess', 'import', 'eval', 'exec',
+      'system', 'popen', 'builtins', 'globals', 'locals', 'getattr', 'setattr',
+      'class', 'compile', 'inspect'
+    ]
+    -->
+    <meta charset="utf-8" />
+    <title>Simple • NotePad</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      :root{
+        --bg:#0b0f16;
+        --panel:#0f1720;
+        --muted:#9aa6b2;
+        --accent:#7c9cff;
+        --glow: 0 6px 24px rgba(124,156,255,0.12);
+        --glass: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+      }
+      html,body{height:100%;margin:0;background:linear-gradient(180deg,#071021 0%,#0b0f16 100%);color:#e6eef6;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+      .wrap{max-width:980px;margin:48px auto;padding:28px;border-radius:12px;background:var(--panel);box-shadow:var(--glow);border:1px solid rgba(255,255,255,0.03);}
+      header{display:flex;align-items:center;gap:14px}
+      .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#6b8bff,#9ee7ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#042032;box-shadow:0 8px 30px rgba(110,150,255,0.12), inset 0 -6px 18px rgba(255,255,255,0.06)}
+      h1{font-size:20px;margin:0}
+      p.lead{margin:6px 0 18px;color:var(--muted);font-size:13px}
+
+      form{display:block}
+      .field{
+        display:block;
+        margin-bottom:12px;
+      }
+      textarea#notes{
+        width:100%;
+        min-height:220px;
+        resize:vertical;
+        padding:14px;
+        border-radius:10px;
+        border:1px solid rgba(255,255,255,0.04);
+        background:rgba(2,6,12,0.45);
+        color:#e6eef6;
+        outline:none;
+        box-shadow: 0 6px 24px rgba(124,156,255,0.06), inset 0 1px 0 rgba(255,255,255,0.02);
+        font-family:var(--mono);
+        font-size:13px;
+        transition:box-shadow .18s ease, border-color .18s ease, transform .06s ease;
+      }
+      textarea#notes:focus{
+        border-color:var(--accent);
+        box-shadow: 0 10px 36px rgba(124,156,255,0.14), 0 0 18px rgba(124,156,255,0.06);
+        transform:translateY(-1px);
+      }
+
+      .controls{display:flex;gap:10px;align-items:center;margin-top:8px}
+      .btn{
+        appearance:none;border:0;padding:10px 14px;border-radius:9px;background:linear-gradient(180deg,var(--accent),#5f7ff8);color:white;font-weight:600;cursor:pointer;box-shadow:0 8px 30px rgba(124,156,255,0.12);
+      }
+      .link{color:var(--muted);text-decoration:none;font-size:14px}
+      .meta{margin-top:18px;color:var(--muted);font-size:13px}
+
+      .panel {margin-top:18px;padding:14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02)}
+      pre.output{background:#02040a;color:#bfe6d6;padding:12px;border-radius:8px;overflow:auto;font-family:var(--mono);font-size:13px}
+      .err{color:#ffb3b3;font-weight:600}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="logo">NP</div>
+        <div>
+          <h1>NotePad</h1>
+          <p class="lead">A tiny notes frontend — paste text below and press <strong>Render</strong>. Inputs are sanitized server-side; if something is blocked well its blocked lol</p>
+        </div>
+      </header>
+
+      <form method="post" autocomplete="off" novalidate>
+        
+        <div class="field">
+          <label for="notes" style="display:block;margin-bottom:6px;color:var(--muted);font-size:13px">Your quick note (or paste content)</label>
+          <textarea id="notes" name="payload" placeholder="Write something… (this is a notes app UI)"></textarea>
+        </div>
+
+        <div class="controls">
+          <button class="btn" type="submit">Render</button>
+          <a class="link" href="/scan" style="margin-left:8px">System summary</a>
+        </div>
+      </form>
+
+      
+
+      
+
+      <p class="meta">Tip: No tips available for you just try harder.</p>
+    </div>
+  </body>
+</html>

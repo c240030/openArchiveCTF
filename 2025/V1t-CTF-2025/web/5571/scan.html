@@ -1,0 +1,46 @@
+
+<!-- templates/scan.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>System Summary • NotePad</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body{font-family:Inter,system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,#071021 0%,#0b0f16 100%);color:#e6eef6;margin:0;padding:40px}
+      .wrap{max-width:900px;margin:0 auto;background:rgba(15,23,32,0.6);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 40px rgba(0,0,0,0.5)}
+      h1{margin:0 0 6px 0;font-size:18px}
+      .muted{color:#98a6b3;font-size:13px;margin-bottom:12px}
+      table{width:100%;border-collapse:collapse;margin-top:12px}
+      th,td{padding:10px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03)}
+      th{color:#9fb0ff;font-weight:600;font-size:13px}
+      td.count{width:100px;text-align:right;color:#bcd9ff}
+      .small-pre{background:#07101a;padding:12px;border-radius:8px;color:#bcd9ff;font-family:var(--mono);overflow:auto}
+      a.link{color:#9fb0ff;text-decoration:none}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>System Summary</h1>
+      <div class="muted">Read-only summary: directory names and file counts are shown. File names and exact contents are hidden.</div>
+
+      <h3 style="margin-top:14px;margin-bottom:6px">Processes (short)</h3>
+      <div class="small-pre">
+root      1  0.0  0.1  15884  3140 ?        Ss   00:00   0:00 /sbin/init
+www-data  9  0.1  0.5  32540 12320 ?        S    00:01   0:01 python3 /app/app.py
+</div>
+
+      <h3 style="margin-top:14px;margin-bottom:6px">File system (top-level)</h3>
+      <table aria-label="dirs">
+        <thead>
+          <tr><th>Directory</th><th class="count">Files</th></tr>
+        </thead>
+        <tbody>
+</tbody>
+      </table>
+
+      <p class="muted" style="margin-top:14px">Note: if a directory is inaccessible it will be marked as such. Use the note editor to craft requests that attempt to read files (encoded tokens required).</p>
+      <p style="margin-top:12px"><a class="link" href="/">← Back to NotePad</a></p>
+    </div>
+  </body>
+</html>
