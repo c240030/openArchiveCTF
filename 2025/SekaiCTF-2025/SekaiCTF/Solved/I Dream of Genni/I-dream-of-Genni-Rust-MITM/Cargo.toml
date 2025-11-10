@@ -1,0 +1,8 @@
+[package]
+name = "dream_solver"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rayon = "1.6"
+indicatif = { version = "0.17", features = ["rayon"] }
