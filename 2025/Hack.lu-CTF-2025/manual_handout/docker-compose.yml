@@ -1,0 +1,12 @@
+name: MANUAL
+services:
+  manual:
+    build:
+      context: .
+    ports:
+      - "1024:1024"
+    env_file:
+      - .env      
+    environment:
+      - FLAG=${FLAG}
+    restart: unless-stopped
