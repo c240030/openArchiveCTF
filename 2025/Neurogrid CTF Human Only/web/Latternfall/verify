@@ -1,0 +1,16 @@
+{valid: true, user: {username: "admin", role: "user", email: "admin@example.com"}}
+user
+: 
+{username: "admin", role: "user", email: "admin@example.com"}
+email
+: 
+"admin@example.com"
+role
+: 
+"user"
+username
+: 
+"admin"
+valid
+: 
+true

@@ -1,0 +1,19 @@
+{message: "User created successfully",…}
+message
+: 
+"User created successfully"
+user
+: 
+{id: 1, username: "admin", email: "admin@example.com", role: "user"}
+email
+: 
+"admin@example.com"
+id
+: 
+1
+role
+: 
+"user"
+username
+: 
+"admin"
