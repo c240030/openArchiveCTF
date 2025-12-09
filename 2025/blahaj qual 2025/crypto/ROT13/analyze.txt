@@ -1,0 +1,15 @@
+# mô phỏng RSA cryptosystem với giao thức OT 1-3
+# Tham số: n = p*q, e = 65537
+# Flag được mã hóa dưới dạng c = FLAG^e mod n
+# Cơ chế rò rỉ thông tin:
+# Server chia p thành 3 phần: Lower bits, Middle bits, Upper bits
+# b = 1024/3 = 341 bits
+# m0 = Lower bits = p & ((1<<b)-1) 0->340
+# m1 = Middle bits = p & (((1<<b)-1)<<b) 341->681 vì p có 512 bits nên m1 sẽ là p & (((1<<171)-1)<<341). Giá trị số học
+# của m1 sẽ là HIgher bits của p dịch xuống 341 bits: High_bits x 2^341
+# m2 = Upper bits = p & (((1<<b)-1)<<2b) 682->1023 vì p có 512 bits nên m2 sẽ là 0
+
+# Giao thức OT
+# Server tạo 3 giá trị ngẫu nhiên x0, x1, x2 trong Z_n
+# Client gửi lên số v, server tính k_i = (v - x_i)^d mod n và c_i = m_i + k_i và trả về cho client c0, c1, c2
+# Lỗ hổng: CLient chọn v = x_i khi đó: k_i = (x_i - x_i)^d = 0 => c_i = m_i -> Thấy được giá trị nguyên vẹn của m_i

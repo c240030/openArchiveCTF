@@ -1,0 +1,11 @@
+Data from .pcap
+
+# From packet 14
+client_public_key_A = int("10800503958313532508703483527316858486221753413274690920762040")
+
+# From packet 16
+server_public_key_B = int("1408737133570836687938369313016555892179945972238420904039351")
+
+# From packet 4
+iv_hex = "27899e4a13288b70c146368509f07b03"
+encrypted_msg_b64 = "oDdTRGeG7vChufQ1k9vK7CSDhcTASt0z0QIoprH04Kw="

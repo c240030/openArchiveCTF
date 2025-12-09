@@ -1,0 +1,41 @@
+
+from sage.all import *
+from Crypto.Util.number import long_to_bytes
+
+n = 115543817958956886443891566604639827844411291051770915355137535576291276670545243803674632937332056180904315515918348283269683459469843245376510254634915496801166338297790515078803404439627432880371437971131243628879096735989539424516425957756944999028107900899987890851534448127875874850838268713231011121229
+e = 65537
+c = 45288582024956125808559251578358113941923016864841225783643305170778350006398989529569824629695114863894819103405267122272962590869840355513855588995751489826159976460881860555494204359725499695833373679832892772232049626387151237185606142067256042235030096973480664998181938169817595092731437627429938162037
+known_p = 12902616231108903480339350041720432256388189894455141704064938799282897955775096613631580607459787807844691336795699264474969294605750851252653891413606400
+shift_bits = 0
+
+print("[*] [SAGE] Running Coppersmith with beta=0.5...")
+
+P.<x> = PolynomialRing(Zmod(n))
+f = known_p + x * (2^shift_bits)
+f = f.monic()
+
+# FIX: beta=0.5 is crucial because p is approx N^0.5
+roots = f.small_roots(beta=0.5, epsilon=0.01)
+
+if roots:
+    missing_val = Integer(roots[0])
+    p = known_p + missing_val * (2^shift_bits)
+
+    if n % p == 0:
+        print("[+] [SAGE] Factor p FOUND!")
+        q = n // p
+        phi = (p - 1) * (q - 1)
+        d = inverse_mod(e, phi)
+        m = power_mod(c, d, n)
+
+        try:
+            flag = long_to_bytes(int(m)).decode()
+            print("\n" + "="*40)
+            print(f"FLAG: {flag}")
+            print("="*40 + "\n")
+        except:
+            print(f"Decrypted (raw): {m}")
+    else:
+        print("[-] [SAGE] p check failed.")
+else:
+    print("[-] [SAGE] Roots not found with beta=0.5.")
