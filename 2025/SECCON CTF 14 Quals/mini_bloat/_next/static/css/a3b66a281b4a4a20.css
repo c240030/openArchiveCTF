@@ -1,0 +1,345 @@
+:root {
+  --bg: #0b332c;
+  --bg-surface: color-mix(in srgb, var(--bg), black 15%);
+  --text: #f5f5f5;
+  --accent: #ffb74d;
+  --brand: #b61924;
+  --danger: #ff6f61;
+  --success: #80e27e;
+  --tile-radius: 0.1rem;
+  --font: 'Times New Roman', Times, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 1.5rem 2rem 1.25rem;
+  text-align: center;
+  background: var(--bg-surface);
+  border-bottom: 1px solid color-mix(in srgb, var(--text), transparent 88%);
+
+  h1 {
+    margin: 0 0 0.35rem;
+    font-size: 1.7rem;
+    letter-spacing: 0.03em;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: color-mix(in srgb, var(--text), transparent 30%);
+  }
+
+  .season-label {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: color-mix(in srgb, var(--text), transparent 45%);
+  }
+}
+
+.flag-banner {
+  margin-top: 0.75rem;
+  font-family: var(--font);
+  padding: 0.45rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  background: color-mix(in srgb, black, transparent 65%);
+  color: color-mix(in srgb, var(--text), transparent 30%);
+
+  &.visible {
+    border-style: solid;
+    border-color: var(--accent);
+    color: color-mix(in srgb, var(--accent), white 20%);
+    background: color-mix(in srgb, var(--accent), transparent 85%);
+  }
+}
+
+.app-main {
+  flex: 1 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1.75rem 2rem 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.calendar {
+  flex: 1 1 320px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-gap: 0.75rem;
+  gap: 0.75rem;
+  align-content: flex-start;
+}
+
+.day-tile {
+  border-radius: var(--tile-radius);
+  border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
+  background: color-mix(in srgb, var(--bg), black 20%);
+  color: var(--text);
+  padding: 0.9rem 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition:
+    background 150ms ease-out,
+    border-color 150ms ease-out,
+    transform 120ms ease-out;
+
+  &::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 0.3rem;
+    right: 0.55rem;
+    font-size: 0.65rem;
+    color: color-mix(in srgb, var(--text), transparent 30%);
+    opacity: 0.7;
+  }
+
+  &:hover:not(:disabled):not(.day-tile.locked) {
+    background: color-mix(in srgb, var(--brand), transparent 65%);
+    border-color: color-mix(in srgb, var(--brand), white 40%);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &.locked {
+    opacity: 0.35;
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  &.selected {
+    background: color-mix(in srgb, var(--brand), transparent 20%);
+    border-color: color-mix(in srgb, var(--brand), white 40%);
+    box-shadow: 0 0 0 0.9rem color-mix(in srgb, var(--brand), transparent 84%);
+    animation: dayTileSelectedPulse 1.4s ease-in-out infinite;
+  }
+
+  &.solved {
+    background: color-mix(in srgb, var(--brand), black 50%);
+  }
+
+  &.unlocked:not(.day-tile.selected):not(.day-tile.solved) {
+    background: color-mix(in srgb, var(--bg), var(--brand) 10%);
+  }
+}
+
+@keyframes dayTileSelectedPulse {
+  0% {
+    box-shadow: 0 0 0 0.26rem color-mix(in srgb, var(--brand), transparent 84%);
+  }
+
+  50% {
+    box-shadow: 0 0 0 0.58rem color-mix(in srgb, var(--brand), transparent 90%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0.26rem color-mix(in srgb, var(--brand), transparent 84%);
+  }
+}
+
+.challenge-detail {
+  flex: 1 1 40rem;
+  background: var(--bg-surface);
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
+  padding: 1.35rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    margin: 0 0 0.3rem;
+    font-size: 1.35rem;
+  }
+
+  .challenge-day-label {
+    margin: 0 0 0.8rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: color-mix(in srgb, var(--text), transparent 30%);
+  }
+
+  .challenge-description {
+    margin: 0 0 1.1rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.7rem;
+    background: color-mix(in srgb, black, transparent 45%);
+    border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
+    font-family: var(--font);
+    font-size: 0.85rem;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+
+  .challenge-form {
+    margin-top: 0.25rem;
+
+    .challenge-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .challenge-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        font-size: 0.9rem;
+
+        span {
+          color: color-mix(in srgb, var(--text), transparent 30%);
+        }
+
+        input[type='number'] {
+          border-radius: 0.6rem;
+          border: 1px solid color-mix(in srgb, var(--text), transparent 70%);
+          padding: 0.4rem 0.55rem;
+          font-size: 0.95rem;
+          background: color-mix(in srgb, var(--bg), black 30%);
+          color: var(--text);
+
+          &::placeholder {
+            color: color-mix(in srgb, var(--text), transparent 60%);
+          }
+
+          &:focus-visible {
+            outline: 1px solid var(--accent);
+            border-color: var(--accent);
+          }
+        }
+      }
+    }
+
+    .challenge-buttons-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.9rem;
+
+      .locked-label {
+        color: color-mix(in srgb, var(--text), transparent 40%);
+        font-size: 0.85rem;
+        align-self: center;
+      }
+    }
+  }
+
+  .challenge-status {
+    margin-top: 0.8rem;
+    min-height: 1.1rem;
+    font-size: 0.9rem;
+
+    &.success {
+      color: var(--success);
+    }
+
+    &.error {
+      color: var(--danger);
+    }
+  }
+}
+
+.primary-button,
+.secondary-button {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 140ms ease-out,
+    color 140ms ease-out,
+    border-color 140ms ease-out,
+    transform 120ms ease-out;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: color-mix(in srgb, var(--accent), black 85%);
+
+  &:hover {
+    background: color-mix(in srgb, var(--accent), white 20%);
+    transform: translateY(-1px);
+  }
+}
+
+.secondary-button {
+  background: transparent;
+  color: color-mix(in srgb, var(--text), transparent 30%);
+  border-color: color-mix(in srgb, var(--text), transparent 70%);
+
+  &:hover {
+    color: var(--text);
+    border-color: var(--text);
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    padding-inline: 1.25rem;
+  }
+
+  .calendar {
+    order: 2;
+  }
+
+  .challenge-detail {
+    order: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .calendar {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .app-header {
+    padding-inline: 1.25rem;
+  }
+}
+
