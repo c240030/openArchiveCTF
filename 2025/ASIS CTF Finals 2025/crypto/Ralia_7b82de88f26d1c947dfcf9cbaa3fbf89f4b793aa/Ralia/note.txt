@@ -1,0 +1,7 @@
+Nice chall got me table-banging (again)
+
+Reference:
+
+https://artofproblemsolving.com/wiki/index.php/1988_IMO_Problems/Problem_6
+
+https://en.wikipedia.org/wiki/Vieta_jumping
