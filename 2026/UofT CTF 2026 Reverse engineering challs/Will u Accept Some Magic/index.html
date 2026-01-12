@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wasm Decompiler Helper</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+        .instructions { background: #e7f3fe; border-left: 6px solid #2196F3; padding: 15px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>WASM Analysis Helper</h1>
+    
+    <div class="instructions">
+        <h3>How to use:</h3>
+        <p><strong>Step 1:</strong> Open Developer Tools (Press <code>F12</code> or Right Click > Inspect).</p>
+        <p><strong>Step 2:</strong> Go to the <strong>"Sources"</strong> tab.</p>
+        <p><strong>Step 3:</strong> Look for <code>program.wasm</code> in the file tree (left panel) and click it.</p>
+        <p><em>Chrome will automatically decompile the binary into readable .wat format.</em></p>
+    </div>
+
+    <div id="status">Loading...</div>
+
+    <script type="module">
+        async function load() {
+            const statusDiv = document.getElementById('status');
+            try {
+                // Fetch the wasm file
+                const response = await fetch('program.wasm');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const buffer = await response.arrayBuffer();
+                
+                // Compile it to trigger Chrome's internal debug engine
+                // We don't strictly need to run it, just compiling it makes it visible in "Sources"
+                await WebAssembly.compile(buffer);
+                
+                statusDiv.innerHTML = "<strong style='color:green'>Success!</strong> Wasm loaded. Check the DevTools 'Sources' tab.";
+                console.log("WASM loaded successfully. You can now view the source code in the DevTools.");
+            } catch (e) {
+                console.error("Error:", e);
+                statusDiv.innerHTML = `<strong style='color:red'>Error:</strong> ${e.message}<br><br>` + 
+                                      `Make sure you are running this via a local server (e.g., <code>python -m http.server</code> or <code>npx serve</code>), not by opening the file directly.`;
+            }
+        }
+        load();
+    </script>
+</body>
+</html>
